@@ -6,6 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\Post;
+use App\Form\PostType;
+use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
+
 class DefaultController extends AbstractController
 {
     /**
@@ -60,5 +65,20 @@ class DefaultController extends AbstractController
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->setContent(json_encode($users));
         return $response;
+    }
+
+    /**
+     * @Route("/api/users2", name="users2")
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getUsers2(PostRepository $postRepository)
+    {
+        $posts = $postRepository->findAll();
+        // $response = new Response();
+        // $response->headers->set('Content-Type', 'application/json');
+        // $response->headers->set('Access-Control-Allow-Origin', '*');
+        dump(json_decode('{"firstName":"Peter","lastName:":"Silva","age":23}'));
+        die;
+        return $this->json($posts);
     }
 }
